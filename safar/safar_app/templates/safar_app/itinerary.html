@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Itinerary - My Paris Getaway</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'safar_pp/css/style.css/styles1.css' %}">
+
+
+    <style>
+        nav{
+            background-color: rgb(151, 101, 101);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Safar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Destinations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">My Trips</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Plan a Trip</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Profile
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Trip Overview Section -->
+    <section class="container my-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>My Paris Getaway</h2>
+                <p><strong>Destination:</strong> Paris, France</p>
+                <p><strong>Trip Dates:</strong> April 10 - April 17, 2025 (7 Days)</p>
+                <p><strong>Number of Travelers:</strong> 2</p>
+                <p><strong>Total Estimated Cost:</strong> $1200</p>
+                <button class="btn btn-primary">Edit Trip</button>
+            </div>
+            <div class="col-md-4">
+                <img src="paris.jpg" alt="Paris" class="img-fluid rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Itinerary Schedule -->
+    <section class="container my-5">
+        <h3>Daily Itinerary</h3>
+        <div class="timeline">
+            <div class="day">
+                <h4>Day 1: April 10, 2025</h4>
+                <p><strong>Morning:</strong> Eiffel Tower Visit - 10:00 AM - 12:00 PM - $50</p>
+                <p><strong>Afternoon:</strong> Paris City Tour - 1:00 PM - 3:00 PM - $100</p>
+                <p><strong>Evening:</strong> Seine River Cruise - 6:00 PM - 8:00 PM - $30</p>
+            </div>
+            <div class="day">
+                <h4>Day 2: April 11, 2025</h4>
+                <p><strong>Morning:</strong> Louvre Museum - 9:00 AM - 12:00 PM - $20</p>
+                <p><strong>Afternoon:</strong> Notre Dame Cathedral - 1:00 PM - 3:00 PM - Free</p>
+                <p><strong>Evening:</strong> Montmartre Exploration - 5:00 PM - 7:00 PM - Free</p>
+            </div>
+            <!-- Add more days dynamically -->
+        </div>
+    </section>
+
+    <!-- Budget Breakdown Section -->
+    <section class="container my-5">
+        <h3>Budget Breakdown</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Accommodation</td>
+                        <td>$500</td>
+                    </tr>
+                    <tr>
+                        <td>Food & Dining</td>
+                        <td>$300</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td>$150</td>
+                    </tr>
+                    <tr>
+                        <td>Activities</td>
+                        <td>$250</td>
+                    </tr>
+                    <tr>
+                        <th>Total Estimated Cost</th>
+                        <th>$1200</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>Remaining Budget:</strong> $400</p>
+    </section>
+
+    <!-- Accommodation & Transport Details Section -->
+    <section class="container my-5">
+        <h3>Accommodation & Transport</h3>
+        <p><strong>Accommodation:</strong> Hotel XYZ, April 10 - April 17, 2025, Booking Reference: #123456</p>
+        <p><strong>Transport:</strong> Flight ABC123, Departure: April 10, 2025, 9:00 AM</p>
+        <button class="btn btn-secondary">Download PDF</button>
+    </section>
+
+    <!-- Notes & Travel Tips Section -->
+    <section class="container my-5">
+        <h3>Notes & Travel Tips</h3>
+        <ul>
+            <li>Wear comfortable shoes for walking tours.</li>
+            <li>Carry a power bank for your phone.</li>
+            <li>Don't forget an adapter for European sockets.</li>
+        </ul>
+    </section>
+
+    <!-- Call-to-Action Buttons -->
+    <section class="container my-5 text-center">
+        <button class="btn btn-success">Download Itinerary (PDF)</button>
+        <button class="btn btn-info">Share Itinerary</button>
+        <button class="btn btn-warning">Modify Trip</button>
+        <button class="btn btn-primary">Confirm & Book</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+        <div class="container text-center">
+            <p><a href="#">Home</a> | <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Terms & Privacy</a></p>
+            <div class="social-icons">
+                <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>

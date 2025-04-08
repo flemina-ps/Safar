@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ destination.name }} - Safar</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero-section text-center p-5 bg-light">
+        <h1>{{ destination.name }}</h1>
+        <p>{{ destination.tagline|default:"Experience this beautiful destination!" }}</p>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Destinations</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ destination.name }}</li>
+            </ol>
+        </nav>
+        <div>
+            <span class="bi bi-star-fill text-warning"></span> {{ destination.rating|default:"4.5" }} ({{
+            destination.review_count|default:"125" }} Reviews)
+        </div>
+        <br>
+        <a href="#" class="cta-btn mt-3">Plan Trip</a>
+    </div>
+
+    <!-- Destination Overview -->
+    <div class="container my-5">
+        <h2>About {{ destination.name }}</h2>
+        <p>{{ destination.description }}</p>
+
+        <h4>History & Culture</h4>
+        <p>{{ destination.history|default:"Brief history of this place..." }}</p>
+
+        <h4>Best Time to Visit</h4>
+        <p>{{ destination.best_time_to_visit|default:"Best seasons to explore this place..." }}</p>
+
+        <h4>Weather</h4>
+        <p>{{ destination.weather|default:"Weather details go here..." }}</p>
+
+        <h4>Travel Tips</h4>
+        <p>{{ destination.tips|default:"General travel tips for tourists." }}</p>
+
+        <a href="{% url 'add_activity' activity.id %}" class="btn btn-success">Add to Trip Plan</a>
+
+
+
+        <!-- <button class="btn btn-outline-primary mt-3">Add to Favorites</button> -->
+    </div>
+
+    <!-- Activities (Static for now or loop if model available) -->
+    <div class="container my-5">
+        <h2>Available Activities & Attractions</h2>
+        {% for activity in activities %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ activity.title }}</h5>
+                <p>{{ activity.description }}</p>
+                <p>Cost: ${{ activity.cost }}</p>
+                <a href="{% url 'add_to_trip' activity.id trip.id %}" class="btn btn-sm btn-success">Add to Trip
+                    Plan</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button class="filter-btn">Adventure</button>
+        <button class="filter-btn">Cultural</button>
+        <button class="filter-btn">Food</button>
+        <button class="filter-btn">Relaxation</button>
+    </div>
+    </div>
+
+    <!-- Map -->
+    <div class="container my-5">
+        <h2>Location Map</h2>
+        <div id="map" style="height: 400px;"></div>
+    </div>
+
+    <!-- Budget Estimator -->
+    <div class="container my-5">
+        <h2>Estimate Your Budget</h2>
+        <form>
+            <div class="mb-3">
+                <label for="accommodation" class="form-label">Accommodation</label>
+                <input type="number" class="form-control" id="accommodation" placeholder="$">
+            </div>
+            <div class="mb-3">
+                <label for="food" class="form-label">Food & Dining</label>
+                <input type="number" class="form-control" id="food" placeholder="$">
+            </div>
+            <div class="mb-3">
+                <label for="transportation" class="form-label">Transportation</label>
+                <input type="number" class="form-control" id="transportation" placeholder="$">
+            </div>
+            <div class="mb-3">
+                <label for="activities" class="form-label">Activities</label>
+                <input type="number" class="form-control" id="activities" placeholder="$">
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Budget</button>
+        </form>
+    </div>
+
+    <!-- Reviews -->
+    <div class="container my-5">
+        <h2>User Reviews & Ratings</h2>
+        <div class="mb-3">
+            <button class="review-btn btn btn-outline-primary" onclick="toggleReviewForm()">Write a Review</button>
+        </div>
+
+        <!-- Review Form -->
+        <div id="review-form" style="display: none;">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+
+        <div class="review-list mt-4">
+            {% if reviews %}
+            {% for review in reviews %}
+            <p><strong>{{ review.name }}:</strong>
+                {{ review.rating|floatformat:1 }} ★ - "{{ review.comment }}"
+                <small class="text-muted">({{ review.date_posted|date:"M d, Y" }})</small>
+            </p>
+            {% endfor %}
+            {% else %}
+            <p>No reviews yet. Be the first to review this destination!</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <!-- Call-to-Action -->
+    <div class="container text-center my-5">
+        <a href="#" class="cta-btn">Plan Your Trip Now</a>
+        <h3 class="mt-3">See Similar Destinations</h3>
+        <!-- You can suggest featured or related destinations here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Home</a></li>
+                        <li><a href="#" class="text-light">About Us</a></li>
+                        <li><a href="#" class="text-light">Contact</a></li>
+                        <li><a href="#" class="text-light">Terms & Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Stay Connected</h5>
+                    <div>
+                        <a href="#" class="text-light me-2">Facebook</a>
+                        <a href="#" class="text-light me-2">Twitter</a>
+                        <a href="#" class="text-light me-2">Instagram</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <form class="newsletter-form">
+                        <h5>Subscribe to Our Newsletter</h5>
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <button class="btn btn-light mt-2" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <p>&copy; 2025 Safar. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+
+    <script>
+        function initMap() {
+            const location = {
+                lat: parseFloat("{{ destination.latitude|default:'48.8566' }}"),
+                lng: parseFloat("{{ destination.longitude|default:'2.3522' }}")
+            };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: location
+            });
+
+            new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+
+    <script>
+        function toggleReviewForm() {
+            const form = document.getElementById('review-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+
+</html>

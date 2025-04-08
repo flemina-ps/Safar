@@ -1,0 +1,76 @@
+{% load static %}
+{% load form_filters %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Trip Planner</title>
+    <link rel="stylesheet" href="{% static 'safar_pp/css/style.css/styles1.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        .navbar {
+            background-color: rgba(32, 9, 107, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar here if needed -->
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="width: 400px;">
+        <h3 class="text-center mb-3">Register</h3>
+        
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Please fix the following errors:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                {{ form.full_name|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                {{ form.email|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                {{ form.username|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                {{ form.password1|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                {{ form.password2|add_class:"form-control" }}
+            </div>
+            <!-- <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" required id="terms">
+                <label class="form-check-label" for="terms">
+                    <input type="checkbox" class="form-check-input me-2" required id="terms"> I agree to the terms & conditions
+                </label>
+            </div> -->
+            <button type="submit" class="btn btn-success w-100">Register</button>
+        </form>
+        <p class="mt-3 text-center">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</div>
+
+</body>
+</html>

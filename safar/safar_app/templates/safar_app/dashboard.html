@@ -1,0 +1,198 @@
+
+{% extends 'safar_app/base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('dashboard-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .navbar {
+            background-color: rgba(107, 9, 9, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Safarnama</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'destinations' %}">Destinations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{}">My Trips</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'plan_trip' %}">Plan a Trip</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">Profile</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="container mt-5 pt-5 text-center">
+        <!-- Profile Picture and Welcome Message -->
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="Flemina.JPG" alt="User Profile" class="profile-pic"> <br>
+        </div>
+        <div>
+            <h1>Welcome back, {{ user.first_name|default:user.username }}</h1>
+            <p>Total Trips: {{ total_trips }} | Upcoming Trips: {{ upcoming_trips.count }} | Favorite Destinations: 3</p>
+        </div>
+       
+    </div>
+
+    <!-- Upcoming Trips Section -->
+    {% for trip in upcoming_trips %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ trip.destination.name }}</h5>
+        <p>{{ trip.start_date }} - {{ trip.end_date }}</p>
+        <a href="{% url 'trip_detail' trip.id %}" class="btn btn-primary">View Trip</a>
+    </div>
+</div>
+{% endfor %}
+
+
+
+        <!-- Search & Filter Section -->
+        <div class="container mt-4">
+            <h2>Search & Filter Trips</h2>
+            <form class="row g-3">
+                <div class="col-md-4">
+                    <label for="filterDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="filterDate">
+                </div>
+                <div class="col-md-4">
+                    <label for="filterLocation" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="filterLocation" placeholder="Enter destination">
+                </div>
+                <div class="col-md-4">
+                    <label for="filterBudget" class="form-label">Budget (Max)</label>
+                    <input type="number" class="form-control" id="filterBudget" placeholder="Enter budget">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+
+
+         <!-- Past Trips Section -->
+         {% for trip in past_trips %}
+         <div class="col-md-4">
+             <div class="card mb-3">
+                 <div class="card-body">
+                     <h5 class="card-title">{{ trip.destination.name }}</h5>
+                     <p>{{ trip.start_date }} - {{ trip.end_date }}</p>
+                     <p>Total Cost: ${{ trip.budget }}</p>
+                     <p>Rating: ⭐⭐⭐⭐☆</p>
+                     <a href="#" class="btn btn-secondary">Write Review</a>
+                     <a href="#" class="btn btn-success">Replan Trip</a>
+                 </div>
+             </div>
+         </div>
+         {% empty %}
+         <p>No past trips found.</p>
+         {% endfor %}
+         
+
+
+        <!-- Saved Itineraries Section -->
+        <div class="container mt-4">
+            <h2>Saved Itineraries</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tokyo, Japan</h5>
+                            <p>Planned Date: May 15 - May 22, 2025</p>
+                            <p>Status: Not Confirmed</p>
+                            <a href="#" class="btn btn-warning">Edit Itinerary</a>
+                            <a href="#" class="btn btn-primary">Confirm & Book</a>
+                            <a href="#" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Notifications & Updates Section -->
+        <div class="container mt-4">
+            <h2>Notifications & Updates</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Reminder: Your Paris trip starts in 3 days!</li>
+                <li class="list-group-item">Flight update: Your flight to Tokyo has changed departure time.</li>
+                <li class="list-group-item">Weather Alert: Heavy rainfall expected in Rome next week.</li>
+                <li class="list-group-item">Promo Offer: Get 20% off your next trip booking!</li>
+            </ul>
+        </div>
+
+
+    <!-- Quick Actions -->
+    <div class="container text-center my-4">
+        <a href="#plan" class="btn btn-success">Plan a New Trip</a>
+        <a href="#destinations" class="btn btn-info">Explore Destinations</a>
+        <a href="#" class="btn btn-outline-primary">Download Itinerary</a>
+        <a href="#" class="btn btn-outline-secondary">Share Trip Details</a>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="text-center p-4 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#about" class="text-light">About Us</a></li>
+                        <li><a href="#contact" class="text-light">Contact</a></li>
+                        <li><a href="#faq" class="text-light">FAQ</a></li>
+                        <li><a href="#privacy" class="text-light">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Stay Connected</h5>
+                    <p>Email: support@safarnama.com</p>
+                    <div>
+                        <a href="#" class="text-light me-2">Facebook</a>
+                        <a href="#" class="text-light me-2">Twitter</a>
+                        <a href="#" class="text-light">Instagram</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>&copy; 2025 Trip Planner. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

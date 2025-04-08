@@ -1,0 +1,142 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Hero Container - Unified Background */
+.hero-container {
+    background: url('nice-landscape-with-boat.jpg') no-repeat center center/cover;
+    height: 100vh;
+    position: relative;
+}
+
+/* Navbar */
+.navbar {
+    background: transparent; 
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    padding: 15px 20px;
+    padding: 15px 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5); 
+}
+
+
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover{
+    color: #22f056;
+
+}
+
+
+
+
+.icon-link i {
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.icon-link i:hover {
+    color: #22f056; /* Highlight on hover */
+    transform: scale(1.1);
+}
+
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Overlay to improve text readability */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+
+.card-image{
+    height: 300px;
+}
+
+.footer {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 70%);
+    animation: footerGlow 10s infinite linear;
+    z-index: 0;
+}
+
+@keyframes footerGlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.footer-section {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #f8d210;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #f8d210;
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+    color: white;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #f8d210;
+    transform: scale(1.2);
+}
